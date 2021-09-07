@@ -1,28 +1,47 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
+    <footer-nav :showNav="showNav"></footer-nav>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import FooterNav from './components/FooterNav.vue'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    FooterNav
+  },
+  watch: {
+     // 如果路由有变化，会执行该方法
+    '$route': function() {
+      this.routeChange()
+    }
+  },
+  methods: {
+    routeChange () {
+      let path = this.$route.path
+      if (path === '/' || path === '/cinema' || path === '/me') {
+        this.showNav = true
+      } else {
+        this.showNav = false
+      }
+    }
+  },
+  created () {
+    this.routeChange()
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  padding: 0;
+  margin: 0;
 }
+body {
+    background: #f5f5f5;
+  }
 </style>
